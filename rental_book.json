@@ -1,0 +1,300 @@
+{
+  "Name": "rental_book",
+  "CreationDate": "2024-6-14",
+  "Commands": [
+    {
+      "Command": "store",
+      "Target": "1",
+      "Value": "row",
+      "Description": ""
+    },
+    {
+      "Command": "csvReadArray",
+      "Target": "last.csv",
+      "Value": "input",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${!csvReadMaxRow}",
+      "Value": "!csvReadLineNumber",
+      "Description": ""
+    },
+    {
+      "Command": "while_v2",
+      "Target": "(${row}  <  ${!csvReadLineNumber})",
+      "Value": "row",
+      "Description": ""
+    },
+    {
+      "Command": "open",
+      "Target": "${input[${row}][0]}",
+      "Value": "Open URL",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "fast",
+      "Value": "!replayspeed",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "0",
+      "Value": "page_check",
+      "Description": ""
+    },
+    {
+      "Command": "while_v2",
+      "Target": "${page_check}==0",
+      "Value": "page_check",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "20000",
+      "Value": "waiting time",
+      "Description": ""
+    },
+    {
+      "Command": "storeText",
+      "Target": "/html/body/div[5]/div[2]/div/main/div/div[4]/div[1]/div[2]/span",
+      "Value": "page_text",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return ${page_text}.split(\" \")[3]",
+      "Value": "current_count",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "list =${page_text}.split(\" \"); r = list[list.length - 2]; return r",
+      "Value": "total_count",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "1",
+      "Value": "loopcounter",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "0",
+      "Value": "thresh",
+      "Description": ""
+    },
+    {
+      "Command": "while_v2",
+      "Target": "${thresh} == 0  ",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "true",
+      "Value": "!errorignore",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "2",
+      "Value": "!timeout_wait",
+      "Description": ""
+    },
+    {
+      "Command": "storeText",
+      "Target": "/html/body/div[5]/div[2]/div/main/div/div[4]/div[2]/table/tbody/tr[${loopcounter} ]/td[3]/span",
+      "Value": "recommended_price",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return ${recommended_price}.split(\" \")[3].split(\"condition\")[0].replace(\"(\",\"\")",
+      "Value": "condictions_count",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return ${recommended_price}.split(\" \")[0].replace(\"$\",\"\")",
+      "Value": "price",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "false",
+      "Value": "!errorignore",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${price} == '#LNF'",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Line not found",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "1",
+      "Value": "thresh",
+      "Description": ""
+    },
+    {
+      "Command": "else",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "fast",
+      "Value": "!replayspeed",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "Number(${price}) > Number(${input[${row}][2]})",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "select",
+      "Target": "xpath=//*[@id=\"recommendations-list\"]/tbody/tr[${loopcounter}]/td/div/select",
+      "Value": "index=1",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "true",
+      "Value": "!errorignore",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "2",
+      "Value": "!timeout_wait",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Number(${loopcounter}) + 2 + Number(${condictions_count})",
+      "Value": "loopcounter",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "false",
+      "Value": "!errorignore",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "action loop ends",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "true",
+      "Value": "!errorignore",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "2",
+      "Value": "!timeout_wait",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"docBody\"]/div/main/div/div[4]/div/div/button",
+      "Value": "submit",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "false",
+      "Value": "!errorignore",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Completed",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "20000",
+      "Value": "!TIMEOUT_WAIT",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${current_count} == ${total_count}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "1",
+      "Value": "page_check",
+      "Description": ""
+    },
+    {
+      "Command": "else",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "/html/body/div[5]/div[2]/div/main/div/div[4]/div[1]/div[2]/button[2]",
+      "Value": "Next",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Number(${row}) + 1",
+      "Value": "row",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    }
+  ]
+}

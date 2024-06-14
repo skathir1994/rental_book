@@ -1,0 +1,270 @@
+{
+  "Name": "PRS Final Automation",
+  "CreationDate": "2024-6-14",
+  "Commands": [
+    {
+      "Command": "store",
+      "Target": "0",
+      "Value": "csvReadLineNumber",
+      "Description": ""
+    },
+    {
+      "Command": "csvReadArray",
+      "Target": "ic_pending_prs.csv",
+      "Value": "input",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "${input[1][0]}",
+      "Value": "input",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${!csvReadMaxRow}",
+      "Value": "!csvReadLineNumber",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "${!csvReadLineNumber}",
+      "Value": "last",
+      "Description": ""
+    },
+    {
+      "Command": "csvReadArray",
+      "Target": "ic_pending_prs.csv",
+      "Value": "input",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "1",
+      "Value": "row",
+      "Description": ""
+    },
+    {
+      "Command": "while_v2",
+      "Target": "(${row}  <  ${!csvReadLineNumber})",
+      "Value": "loop",
+      "Description": ""
+    },
+    {
+      "Command": "open",
+      "Target": "${input[${row}][0]}",
+      "Value": "Open URL",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "40000",
+      "Value": "waiting time",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "fast",
+      "Value": "!replayspeed",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "0",
+      "Value": "page_check",
+      "Description": ""
+    },
+    {
+      "Command": "while_v2",
+      "Target": "${page_check}==0",
+      "Value": "page_check",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "1",
+      "Value": "loopcounter",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "0",
+      "Value": "thresh",
+      "Description": ""
+    },
+    {
+      "Command": "while_v2",
+      "Target": "${thresh} == 0  &&  ${loopcounter} <= 100",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "storeText",
+      "Target": "xpath=//*[@id=\"recommendations-list\"]/tbody/tr[${loopcounter}]/td[2]/span",
+      "Value": "Risk_Score",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "${Risk_Score}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${Risk_Score}<500",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "select",
+      "Target": "xpath=//*[@id=\"recommendations-list\"]/tbody/tr[${loopcounter}]/td/div/select",
+      "Value": "index=1",
+      "Description": ""
+    },
+    {
+      "Command": "else",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "1",
+      "Value": "thresh",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "1",
+      "Value": "page_check",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Number(${loopcounter}) + 1",
+      "Value": "loopcounter",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "${loopcounter} ",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "action loop ends",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Completed",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"docBody\"]/div/main/div/div[4]/div/div/button",
+      "Value": "submit",
+      "Description": ""
+    },
+    {
+      "Command": "visualSearch",
+      "Target": "checkbox12_dpi_121.png",
+      "Value": "checkbox",
+      "Description": ""
+    },
+    {
+      "Command": "visualSearch",
+      "Target": "continue_dpi_122.png",
+      "Value": "continue",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "${continue}",
+      "Value": "continue",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${checkbox} == 1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "xpath=//*[@id=\"docBody\"]/div/main/div/div[3]/div/p[2]/label/input",
+      "Value": "Check Box",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"docBody\"]/div/main/div/div[3]/div/p[2]/label/input",
+      "Value": "Check Box",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"docBody\"]/div/main/div/div[3]/div/p[3]/button",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${continue} == 1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"docBody\"]/div/main/div/div[3]/div/p[3]/button",
+      "Value": "continue",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "60000",
+      "Value": "!TIMEOUT_WAIT",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Number(${row}) + 1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    }
+  ]
+}
